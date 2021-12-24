@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="refresh" content="10"> -->
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    // $(document).ready(function(){
+    //     // $("button").click(function(){
+    //     setInterval(
+    //         $.get("refresh", function(price){
+    //             // e.preventDefault();
+    //             console.log("Data: " + price);
+    //         }), 10000);
+    //     });
+    $(document).ready(function(){
+        var callAjax = function(){
+            $.ajax({
+                method:'get',
+                url:'/refresh',
+                processData:true,
+                dataType:'json',
+                success:function(data){
+                    // $("#main").html(data); 
+                    // $("document").html(data);
+<!--                    diag = JSON.parse(data['diag']);-->
+                    $("#price").html(data['price']);
+
+                    console.log(data);
+                    // console.log(data.slice(6));
+                    $("#diag").html(data['diag']);
+<!--                    $("#diag").html(diag);-->
+
+                    document.getElementById("goto").addEventListener("click", goTo);
+
+                    function goTo() {
+                      var result = document.getElementById("searchbar").value;
+                      window.location.href = '/' + result + '/30/1d';
+                    }
+                } 
+            });
+        }
+        callAjax();
+        setInterval(callAjax,3000);
+
+        // $.getJSON( "refresh", function( data ) {
+
+        //     console.log(data);
+        // });
+    });
+        // $.get("refresh", function(price){
+        //         // e.preventDefault();
+        //         console.log("Data: " + price);
+        //     });
+
+        // $(function() {  
+        // $('#clickme').click(function() {
+        //     $.ajax({
+        //     type: "Get",
+        //     url: 'price.json',
+        //     dataType: 'json',
+        //     success: function(data) {
+        //         var items = [];
+
+        //         $.each(data, function(key, val) {
+
+        //             items.push('<li id="' + key + '">' + val + '</li>');    
+
+        //         });
+
+        //         $('<ul/>', {
+        //             'class': 'interest-list',
+        //             html: items.join('')
+        //         }).appendTo('body');
+
+        //     },
+        //     statusCode: {
+        //         404: function() {
+        //         alert('There was a problem with the server.  Try again soon!');
+        //         }
+        //     }
+        //     });
+        // });
+    // });
+    // });
+    
+    </script>
+</head>
+<body>
+    <h1 class="main" id="main">Main Page</h1>
+    <input type="search" id="searchbar"/>
+    <button id="goto">Search</button>
+
+<!--    <a href="#" id="clickme">Get JSON Data</a>-->
+    <!-- {% def priceTracker():
+        url = 'https://finance.yahoo.com/quote/AAPL?p=AAPL'
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text,'lxml')
+        # print(soup)
+        # print(soup.find_all('span', {'class':'Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)'}))
+        # price = soup.find_all('div', {'class':'D(ib) Mend(20px)'})[0].find('span').text
+        price = soup.find_all('div', {'class':'My(6px) Pos(r) smartphone_Mt(6px) W(100%)'})[0].findAll('span')[3].text
+        # threading.Timer(1, update).start()
+        return price
+        # print('Current Price of Apple: ', priceTracker())
+        # s.enter(60, 1, priceTracker, (sc,))
+    
+    
+    # print(priceTracker())
+    
+        <h1>'Current Price of Apple: '</h1>, priceTracker())
+        time.sleep(60) %}  -->
+    <!-- {{ price }} -->
+    <h2>{{ tk }}</h2>
+    <h2>{{ per }}</h2>
+    <h2>{{ interval }}</h2>
+
+    <h3 id="price" class="price"></h3>
+    <div id='diag' class="diag"></div>
+
+</body>
+<!-- <script>
+    setTimeout(function reload() {location.reload()}, 2000)
+</script> -->
+</html>
